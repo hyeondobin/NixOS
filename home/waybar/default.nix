@@ -70,5 +70,9 @@
         };
       };
     };
+    style = ''
+      ${builtins.readFile ./macchiato.css}
+      ${builtins.readFile ./style.css}
+    '';
   };
 }
