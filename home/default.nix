@@ -4,5 +4,7 @@
   imports = [
     ./hyprland
     ./lsp.nix
+    ./cli.nix
+    ./waybar.nix
   ];
 }

@@ -102,6 +102,7 @@
       ];
       windowrulev2 = [
         "workspace name:Emacs, class:^(emacs).*$"
+        "workspace name:Vivaldi, class:^(Vivaldi).*$"
       ];
 
       ################
@@ -123,7 +124,7 @@
         "$mainMod, E, exec, pgrep emacs && hyprctl dispatch workspace name:Emacs || $emacs"
         "$shiftMod, E, movetoworkspace, Emacs"
 
-        "$mainMod, B, exec, pgrep vivaldi && hyprctl dispatch workspace name:Viavldi || $www"
+        "$mainMod, B, exec, pgrep vivaldi && hyprctl dispatch workspace name:Vivaldi || $www"
         "$shiftMod, B, movetoworkspace, Vivaldi"
         "$ctrlMod, B, exec, $www"
 
