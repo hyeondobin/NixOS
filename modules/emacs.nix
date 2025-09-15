@@ -14,5 +14,8 @@ in
     ))
     pkgs.cmake
     pkgs.gnumake
+
+    # Language Servers
+    pkgs.nil # nix
   ];
 }
