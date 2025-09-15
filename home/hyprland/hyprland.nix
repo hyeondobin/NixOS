@@ -122,10 +122,10 @@
 
         # Special workspace for emacs
         "$mainMod, E, exec, pgrep emacs && hyprctl dispatch workspace name:Emacs || $emacs"
-        "$shiftMod, E, movetoworkspace, Emacs"
+        "$shiftMod, E, movetoworkspace, name:Emacs"
 
         "$mainMod, B, exec, pgrep vivaldi && hyprctl dispatch workspace name:Vivaldi || $www"
-        "$shiftMod, B, movetoworkspace, Vivaldi"
+        "$shiftMod, B, movetoworkspace, name:Vivaldi"
         "$ctrlMod, B, exec, $www"
 
       ] ++ (
