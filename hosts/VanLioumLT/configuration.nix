@@ -77,6 +77,7 @@
 	    ModifierOnlyKeyTimeout = "250";
 	  };
 	  "Hotkey/TriggerKeys"."0" = "Alt+Alt_R";
+    "Hotkey/TriggerKeys"."1" = "Hangul";
 	};
       };
     };
@@ -87,9 +88,15 @@
     withUWSM = true;
     xwayland.enable = true;
   };
-  programs.git.config = {
-    users.name = "hyeondobin";
-    users.email = "dobinhyeon@gmail.com";
+  programs.git = {
+    config = {
+      users.name = "hyeondobin";
+      users.email = "dobinhyeon@gmail.com";
+      init = {
+        defaultBranch = "main";
+      };
+    };
+
   };
   # Enable the X11 windowing system.
   # You can disable this if you're only using the Wayland session.
