@@ -6,6 +6,5 @@
   imports = [
     ./nix.nix
     ./emacs.nix
-
   ];
 }
