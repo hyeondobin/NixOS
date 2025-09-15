@@ -20,7 +20,6 @@
       systems = ["x86_64-linux"];
       # forAllsystems = nixpkgs.lib.genAttrs system;
       username = "dobin";
-      
       in
     {
     nixosConfigurations = {
