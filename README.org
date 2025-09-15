@@ -1,0 +1,3 @@
+* Dobin's NixOS flake
+
+don't know what to write to README for now
