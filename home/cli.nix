@@ -2,6 +2,9 @@
   home.packages = [
     pkgs.fastfetch
   ];
+  programs.eza = {
+    enable = true;
+  };
   programs.fish = {
     enable = true;
     preferAbbrs = true;
