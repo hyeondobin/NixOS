@@ -15,6 +15,7 @@
     ]))
     pkgs.cmake
     pkgs.gnumake
+    pkgs.ripgrep
 
     # Language Servers
     pkgs.nil # nix

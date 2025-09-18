@@ -1,10 +1,9 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   home.packages = [
     pkgs.fastfetch
+    pkgs.eza
   ];
-  programs.eza = {
-    enable = true;
-  };
   programs.fish = {
     enable = true;
     preferAbbrs = true;

@@ -1,5 +1,8 @@
 { config, lib, ... }:{
-  home.sessionVariables.NIXOS_OZONE_WL = "1";
+  home.sessionVariables = {
+    NIXOS_OZONE_WL = "1";
+    ELECTRON_OZONE_PLATFORM_HINT = "wayland";
+  };
   
   wayland.windowManager.hyprland = {
     enable = true;
@@ -102,7 +105,9 @@
       ];
       windowrulev2 = [
         "workspace name:Emacs, class:^(emacs).*$"
-        "workspace name:Vivaldi, class:^(Vivaldi).*$"
+        "workspace name:Vivaldi, class:^(vivaldi).*$"
+	"workspace 1, class:^(kitty).*$"
+	"workspace name:Vimb, class:^(vimb).*$"
       ];
 
       ################
@@ -123,10 +128,14 @@
         # Special workspace for emacs
         "$mainMod, E, exec, pgrep emacs && hyprctl dispatch workspace name:Emacs || $emacs"
         "$shiftMod, E, movetoworkspace, name:Emacs"
+	"$ctrlMod, E, exec, $emacs"
 
         "$mainMod, B, exec, pgrep vivaldi && hyprctl dispatch workspace name:Vivaldi || $www"
         "$shiftMod, B, movetoworkspace, name:Vivaldi"
         "$ctrlMod, B, exec, $www"
+
+	"$mainMod, V, exec, pgrep vimb && hyprctl dispatch workspace name:Vimb || vimb"
+	"$shiftMod, V, movetoworkspace, name:Vimb"
 
       ] ++ (
         # switch to workspaces with main mod + 0-9

@@ -5,6 +5,7 @@
     ./hyprland
     ./cli.nix
     ./waybar
+    ./vimb.nix
   ];
 
 

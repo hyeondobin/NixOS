@@ -1,11 +1,11 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ../../modules/default.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    ../../modules/default.nix
+  ];
 
   # Bootloader.
   boot.loader = {
@@ -18,21 +18,30 @@
     efi.canTouchEfiVariables = true;
   };
 
-  networking.hostName = "VanLioum_LT"; # Define your hostname.
+  services.udev = {
+    enable = true;
+    packages = [
+      pkgs.qmk-udev-rules
+      pkgs.vial
+    ];
+  };
 
-  
+  networking.hostName = "VanLioum_LT"; # Define your hostname.
 
   # Enable networking
   networking.networkmanager.enable = true;
 
   # setup nix
   nix.settings = {
-    experimental-features = ["nix-command" "flakes"];
-    substituters = ["https://hyprland.cachix.org"];
-    trusted-substituters = ["https://hyprland.cachix.org"];
-    trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
+    substituters = [ "https://hyprland.cachix.org" ];
+    trusted-substituters = [ "https://hyprland.cachix.org" ];
+    trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
   };
-  
+
   # Set your time zone.
   time.timeZone = "Asia/Seoul";
 
@@ -61,24 +70,24 @@
       ];
       settings = {
         inputMethod = {
-	  GroupOrder."0" = "Default";
-	  "Groups/0" = {
-	    Name = "Default";
-	    "Default Layout" = "us";
-	    DefaultIM = "hangul";
-	  };
-	  "Groups/0/Items/0".Name = "keyboard-us";
-	  "Groups/0/Items/1".Name = "hangul";
-	};
-	globalOptions = {
-	  Hotkey = {
-	    EnumerateWithTriggerKeys = true;
-	    EnumerateSkipFirst = false;
-	    ModifierOnlyKeyTimeout = "250";
-	  };
-	  "Hotkey/TriggerKeys"."0" = "Alt+Alt_R";
-    "Hotkey/TriggerKeys"."1" = "Hangul";
-	};
+          GroupOrder."0" = "Default";
+          "Groups/0" = {
+            Name = "Default";
+            "Default Layout" = "us";
+            DefaultIM = "hangul";
+          };
+          "Groups/0/Items/0".Name = "keyboard-us";
+          "Groups/0/Items/1".Name = "hangul";
+        };
+        globalOptions = {
+          Hotkey = {
+            EnumerateWithTriggerKeys = true;
+            EnumerateSkipFirst = false;
+            ModifierOnlyKeyTimeout = "250";
+          };
+          "Hotkey/TriggerKeys"."0" = "Alt+Alt_R";
+          "Hotkey/TriggerKeys"."1" = "Hangul";
+        };
       };
     };
   };
@@ -138,14 +147,17 @@
   users.users.dobin = {
     isNormalUser = true;
     description = "dobin";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
     packages = with pkgs; [
       kdePackages.kate
-    #  thunderbird
+      #  thunderbird
     ];
   };
 
-    programs.bash = {
+  programs.bash = {
     interactiveShellInit = ''
       if [[ $(${pkgs.procps}/bin/ps --no-header --pid=$PPID --format=comm) != "fish" && -z ''${BASH_EXECUTION_STRING} ]] then
         shopt -q login_shell && LOGIN_OPTION='--login' || LOGIN_OPTION=""
@@ -169,7 +181,7 @@
       SSH_AUTH_SOCK = "/home/dobin/.bitwarden-ssh-agent.sock";
     };
     systemPackages = with pkgs; [
-      neovim 
+      neovim
       emacs
       wget
       curl
@@ -185,7 +197,6 @@
       NIXOS_OZONE_WL = "1";
     };
   };
-  
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
