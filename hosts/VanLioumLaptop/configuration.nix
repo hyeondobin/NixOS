@@ -4,19 +4,25 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    ../../modules/default.nix
+    ../../modules
   ];
 
   # Bootloader.
-  boot.loader = {
-    grub = {
-      enable = true;
-      device = "nodev";
-      efiSupport = true;
-      useOSProber = true;
+    boot.loader = {
+        grub = {
+            enable = true;
+            device = "nodev";
+            efiSupport = true;
+            useOSProber = true;
+            configurationLimit = 10;
+        };
+        efi.canTouchEfiVariables = true;
     };
-    efi.canTouchEfiVariables = true;
-  };
+
+    # Enable graphic drivers
+    hardware = {
+        graphics.enable = true;
+    };
 
   services.udev = {
     enable = true;
@@ -26,7 +32,7 @@
     ];
   };
 
-  networking.hostName = "VanLioum_LT"; # Define your hostname.
+  networking.hostName = "VanLioumLaptop"; # Define your hostname.
 
   # Enable networking
   networking.networkmanager.enable = true;
@@ -98,6 +104,7 @@
     xwayland.enable = true;
   };
   programs.git = {
+        enable = true;
     config = {
       users.name = "hyeondobin";
       users.email = "dobinhyeon@gmail.com";
@@ -105,56 +112,39 @@
         defaultBranch = "main";
       };
     };
-
   };
+
   # Enable the X11 windowing system.
   # You can disable this if you're only using the Wayland session.
   services.xserver.enable = true;
-
-  # Enable the KDE Plasma Desktop Environment.
   services.displayManager.sddm.enable = true;
-  services.desktopManager.plasma6.enable = true;
-
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "us,kr";
-    variant = "";
-  };
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
   # Enable sound with pipewire.
-  services.pulseaudio.enable = false;
-  security.rtkit.enable = true;
+  security.rtkit.enable = true; # Optional but recommended for pipewire
   services.pipewire = {
     enable = true;
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
   };
 
   # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
+  services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.dobin = {
+  users.users.hyeondobin = {
     isNormalUser = true;
     description = "dobin";
     extraGroups = [
       "networkmanager"
       "wheel"
     ];
-    packages = with pkgs; [
-      kdePackages.kate
-      #  thunderbird
-    ];
+        packages = with pkgs; [
+            neovim
+        ];
   };
 
   programs.bash = {
@@ -177,17 +167,20 @@
   # $ nix search wget
   environment = {
     variables = {
-      EDITOR = "emacs";
-      SSH_AUTH_SOCK = "/home/dobin/.bitwarden-ssh-agent.sock";
+      EDITOR = "nvim";
+      SSH_AUTH_SOCK = "/home/hyeondobin/.bitwarden-ssh-agent.sock";
     };
     systemPackages = with pkgs; [
       neovim
-      emacs
       wget
       curl
       btop
       git
       kitty
+            ghostty
+            bat
+            zoxide
+            lazygit
 
       google-chrome
       vivaldi

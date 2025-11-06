@@ -23,16 +23,16 @@
     }@inputs:
     {
       nixosConfigurations = {
-        VanLioumLT = nixpkgs.lib.nixosSystem {
+        VanLioumLaptop = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = { inherit inputs; };
           modules = [
-            ./hosts/VanLioumLT/configuration.nix
+            ./hosts/VanLioumLaptop/configuration.nix
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.dobin = import ./home;
+              home-manager.users.hyeondobin= import ./home;
               home-manager.backupFileExtension = "home-manager-backup";
             }
           ];

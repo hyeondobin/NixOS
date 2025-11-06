@@ -1,5 +1,6 @@
 { lib, ... }:{
-  imports = [
-    ./hyprland.nix
-  ];
+    imports = [
+        ./hyprland.nix
+        ./wofi.nix
+    ];
 }

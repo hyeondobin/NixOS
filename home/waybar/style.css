@@ -7,12 +7,12 @@
 #waybar {
   background: transparent;
   color: @text;
-  margin: 0px 5px;
+  margin: 0px 0px;
 }
 
 #workspaces {
   border-radius: 1rem;
-  margin: 5px;
+  margin: 2px;
   background-color: @surface0;
   margin-left: 1rem;
 }
@@ -42,8 +42,8 @@
 #custom-lock,
 #custom-power {
   background-color: @surface0;
-  padding: 0.5rem 1rem;
-  margin: 5px 0;
+  padding: 0.5rem 0.5rem;
+  margin: 2px 0;
 }
 
 #clock {
