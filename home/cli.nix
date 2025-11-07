@@ -4,7 +4,7 @@
         pkgs.fastfetch
         pkgs.eza
     ];
-    home.file.".config.fish" = {
+    home.file.".config/fish" = {
         source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/repo/dotfiles/Configs/fish/.config/fish";
         recursive = true;
     };
