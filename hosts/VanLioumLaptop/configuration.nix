@@ -24,13 +24,6 @@
         graphics.enable = true;
     };
 
-  services.udev = {
-    enable = true;
-    packages = [
-      pkgs.qmk-udev-rules
-      pkgs.vial
-    ];
-  };
 
   networking.hostName = "VanLioumLaptop"; # Define your hostname.
 

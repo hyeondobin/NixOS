@@ -5,6 +5,7 @@
     ];
     imports = [
         ./nix.nix
+        ./qmk.nix
         # ./emacs.nix
     ];
     # hardware.bluetooth.enable = true;
