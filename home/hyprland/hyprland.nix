@@ -1,12 +1,12 @@
-{ config, lib, ... }:{
+{ pkgs, config, lib, inputs, ... }:{
     home.sessionVariables = {
         NIXOS_OZONE_WL = "1";
         ELECTRON_OZONE_PLATFORM_HINT = "wayland";
     };
     wayland.windowManager.hyprland = {
         enable = true;
-        package = null;
-        portalPackage = null;
+        package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+        portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
         sourceFirst = true;
         settings = {
             source = [ "${toString ./macchiato.conf}" ];
@@ -214,5 +214,8 @@
                 };
             };
         };
+        # plugins = [
+        #     pkgs.hyprlandPlugins.
+        # ];
     };
 }

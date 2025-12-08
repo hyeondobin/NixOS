@@ -9,7 +9,6 @@
         ./vimb.nix
         ./messanger.nix
         ./nvim.nix
+        ./catppuccin.nix
     ];
-
-
 }

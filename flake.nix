@@ -8,17 +8,26 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    catppuccin.url = "github:catppuccin/nix";
 
     emacs-overlay = {
       url = "github:nix-community/emacs-overlay/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    hyprland = {
+      url = "github:hyprwm/Hyprland";
+    };
+    hyprland-plugins = {
+      url = "github:hyprwm/hyprland-plugins";
+      inputs.hyprland.follows = "hyprland";
+    };
+
   };
   outputs =
     {
-      self,
       nixpkgs,
       home-manager,
+      catppuccin,
       ...
     }@inputs:
     {
@@ -30,13 +39,37 @@
             ./hosts/VanLioumLaptop/configuration.nix
             home-manager.nixosModules.home-manager
             {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.hyeondobin= import ./home;
-              home-manager.backupFileExtension = "home-manager-backup";
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                users.hyeondobin = {
+                  imports = [
+                    ./home
+                    catppuccin.homeModules.catppuccin
+                  ];
+                };
+                backupFileExtension = "backup";
+                extraSpecialArgs = { inherit inputs; };
+              };
             }
           ];
         };
+        # VanLioumDesktop = nixpkgs.lib.nixosSystem {
+        #     system = "x86_64-linux";
+        #     specialArgs = {inherit inputs; };
+        #     modules = [
+        #         ./hosts/VanLioumDesktop/configuration.nix
+        #         home-manager.nixosModules.hime-manager
+        #         {
+        #             home-manager = {
+        #                 useGlobalPkgs = true;
+        #                 usoUserPackages = true;
+        #                 users.hyeondobin = import ./home;
+        #                 backupFileExtension = "home-manager-backup";
+        #             };
+        #         };
+        #     ];
+        # };
       };
     };
 }
