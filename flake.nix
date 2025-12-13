@@ -3,12 +3,16 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-
+    nix-index-database = {
+      url = "github:NixOS/nixpkgs/nixos-unstable-small";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     catppuccin.url = "github:catppuccin/nix";
+    nxim.url = "github:hyeondobin/nxim";
 
     emacs-overlay = {
       url = "github:nix-community/emacs-overlay/master";
@@ -26,17 +30,43 @@
   outputs =
     {
       nixpkgs,
+      nix-index-database,
       home-manager,
       catppuccin,
       ...
     }@inputs:
+    let
+      lib = nixpkgs.lib.extend (
+        self: super: {
+          thurs = import ./lib {
+            inherit inputs;
+            lib = self;
+          };
+        }
+      );
+      supportedSystems = [
+        "x86_64-linux"
+      ];
+      forEachSupportedSystem =
+        f:
+        nixpkgs.lib.getAttrs supportedSystems (
+          system:
+          f {
+            pkgs = import nixpkgs { inherit system; };
+          }
+        );
+    in
     {
       nixosConfigurations = {
         VanLioumLaptop = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          specialArgs = { inherit inputs; };
+          # system = "x86_64-linux";
+          specialArgs = {
+            inherit inputs;
+            inherit lib;
+          };
           modules = [
             ./hosts/VanLioumLaptop/configuration.nix
+            # nix-index-database.nixosModules
             home-manager.nixosModules.home-manager
             {
               home-manager = {
